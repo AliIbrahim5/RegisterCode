@@ -1,13 +1,11 @@
 generator client {
   provider = "prisma-client-js"
-
 }
+
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
-  
+  url      = env("DATABASE_URL")
 }
-
 
 model movie {
   id         String     @id @default(uuid())
@@ -19,17 +17,17 @@ model movie {
 }
 
 model Users {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   username    String
   password    String
-  email       String @unique
+  email       String  @unique
   role        Role
   joiningYear String
   age         Int
   code        String?
   verified    Boolean @default(false)
+  isVerified  Boolean @default(false)
 }
-
 
 enum genreMovie {
   Drama
