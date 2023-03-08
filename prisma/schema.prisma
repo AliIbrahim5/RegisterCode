@@ -21,12 +21,14 @@ model Users {
   username    String
   password    String
   email       String  @unique
+  phoneNumber String  @unique
   role        Role
   joiningYear String
   age         Int
   code        String?
   verified    Boolean @default(false)
   isVerified  Boolean @default(false)
+  resetToken  String?
 }
 
 enum genreMovie {

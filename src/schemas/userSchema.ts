@@ -5,6 +5,11 @@ export const RegesterType = z.object({
     username: z.string({ required_error: "username is Required !" }),
     password: z.string({ required_error: "password is Required !" }),
     email: z.string({ required_error: "email is Required & must be unique !" }),
+    phoneNumber: z.string({
+      required_error: "phoneNumber is Required !",
+      invalid_type_error: "must be unique",
+    }),
+
     role: z.enum(["User", "Admin"], {
       required_error: "role is Required & must be ( User OR Admin ) !",
     }),
@@ -28,7 +33,6 @@ export const LoginType = z.object({
   body: z.object({
     email: z.string({ required_error: "email is Required & must be unique !" }),
     password: z.string({ required_error: "password is Required !" }),
-   
   }),
 });
 
