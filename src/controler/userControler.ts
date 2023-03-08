@@ -113,7 +113,7 @@ export const Login = async (req: Request, res: Response) => {
         .status(401)
         .json({ message: "Ooh! The account does not exist" });
     }
-
+    // Check Passord Entrance Matching with database
     const passwordMatch = await argon2.verify(user.password, password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
