@@ -40,7 +40,7 @@ export const Regester = async (req: Request, res: Response) => {
       service: "gmail",
       auth: {
         user: "test.506112@gmail.com",
-        pass: "szvcbsdjtiqwedwq",
+        pass: "szvcbsdjtiqwedwqa",
       },
     });
 
