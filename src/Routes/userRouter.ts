@@ -18,3 +18,7 @@ userRouter.get(`/login`, validate(LoginType), Login);
 userRouter.put(`/Verify`, validate(VerifyCodeType), VerifyCode);
 userRouter.post(`/ForgotPassword`, ForgotPassword);
 userRouter.post(`/forgotEmail`, forgotEmail);
+
+
+// router.get('/admin', protect, authorize('ADMIN'), adminHandler);
+

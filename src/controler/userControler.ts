@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { UserSchemaType } from "../schemas/userSchema";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { Users } from "@prisma/client";
+import * as argon2 from "argon2";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -25,6 +26,7 @@ const generateCode = (): string => {
 export const Regester = async (req: Request, res: Response) => {
   try {
     const newUser = req.body as UserSchemaType;
+
     const code = generateCode();
 
     const newUserWithCode = {

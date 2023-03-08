@@ -1,4 +1,3 @@
-import { movie } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { AnyZodObject, ZodError } from "zod";
 
@@ -17,7 +16,7 @@ const validate =
       const error = err as ZodError;
 
       return res.status(400).json({
-        message: error.errors[0].message
+        message: error.errors[0].message,
       });
     }
   };

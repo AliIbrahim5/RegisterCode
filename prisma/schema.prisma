@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model movie {
-  id         String     @id @default(uuid())
-  name       String     @unique
-  genre      genreMovie
-  duration   Int
-  rating     Int
-  createDate DateTime   @default(now())
-}
-
 model Users {
   id          String  @id @default(uuid())
   username    String
@@ -31,11 +22,6 @@ model Users {
   resetToken  String?
 }
 
-enum genreMovie {
-  Drama
-  Action
-  Comedy
-}
 
 enum Role {
   User
