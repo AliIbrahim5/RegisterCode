@@ -137,17 +137,18 @@ export const ForgotPassword = async (req: Request, res: Response) => {
       email: string;
       newPassword: string;
     };
+    
     const user = await prisma.users.findUnique({ where: { email } });
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
-
+    const hashedPassword = await argon2.hash(newPassword);
     // Update user's password
     await prisma.users.update({
       where: { id: user.id },
-      data: { password: newPassword },
+      data: { password: hashedPassword },
     });
 
     const transporter = nodemailer.createTransport({
