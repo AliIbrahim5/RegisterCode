@@ -28,9 +28,11 @@ export const Regester = async (req: Request, res: Response) => {
     const newUser = req.body as UserSchemaType;
 
     const code = generateCode();
+    const hash = await argon2.hash(newUser.password); // تشفير كلمة المرور
 
     const newUserWithCode = {
       ...newUser,
+      password: hash,
       code,
     };
 
@@ -40,7 +42,7 @@ export const Regester = async (req: Request, res: Response) => {
       service: "gmail",
       auth: {
         user: "test.506112@gmail.com",
-        pass: "szvcbsdjtiqwedwqa",
+        pass: "szvcbsdjtiqwedwq",
       },
     });
 
@@ -97,13 +99,10 @@ export const VerifyCode = async (req: Request, res: Response) => {
     });
   }
 };
+
 export const Login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
-    const passwordin = await prisma.users.findFirst({
-      where: { password },
-    });
 
     const user = await prisma.users.findUnique({
       where: { email },
@@ -114,11 +113,14 @@ export const Login = async (req: Request, res: Response) => {
         .status(401)
         .json({ message: "Ooh! The account does not exist" });
     }
-    if (!passwordin) {
+
+    const passwordMatch = await argon2.verify(user.password, password);
+    if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
     // check if user is verified
-    if (!user.isVerified === true) {
+    if (!user.isVerified) {
       return res.status(401).json({ message: "Account is not verified" });
     }
 
@@ -128,6 +130,7 @@ export const Login = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
 export const ForgotPassword = async (req: Request, res: Response) => {
   try {
     const { email, newPassword } = req.body as {
